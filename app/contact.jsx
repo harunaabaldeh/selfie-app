@@ -1,17 +1,21 @@
 import { Link } from 'expo-router'
-import {View, Text, StyleSheet} from 'react-native'
+import { StyleSheet } from 'react-native'
+
+import ThemedView from "../components/ThemedView";
+import ThemedText from "../components/ThemedText";
 
 const Contact = () => {
-  return (
-    <View style={styles.container}>
-        <Text style={styles.title}>Contact Sirayel Technlogies</Text>
-
-        <Link href="/" style={styles.link}>Home</Link>
-    </View>
-  )
+    return (
+        <ThemedView style={[styles.container, { backgroundColor: theme.background }]}>
+            <ThemedText style={styles.title}>Contact Sirayel Technlogies</ThemedText>
+            <Link href="/" style={styles.link}>
+                <ThemedText>Back to Home</ThemedText>
+            </Link>
+        </ThemedView>
+    )
 }
 
-export default Contact
+export default Contact;
 
 const styles = StyleSheet.create({
     container: {
@@ -23,7 +27,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 18
     },
-    link:{
+    link: {
         marginVertical: 10,
         borderBottomWidth: 1
     }
