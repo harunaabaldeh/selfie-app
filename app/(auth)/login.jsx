@@ -1,20 +1,24 @@
+import { Link } from 'expo-router';
 import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback } from 'react-native'
+import { useState } from 'react';
+import { useUser } from '../../hooks/useUser';
 
 // themed components
 import ThemedView from "../../components/ThemedView";
 import Spacer from "../../components/Spacer";
 import ThemedText from "../../components/ThemedText";
-import { Link } from 'expo-router';
 import { Colors } from '../../constants/Colors';
 import ThemedButton from '../../components/ThemedButton';
 import ThemedTextInput from '../../components/ThemedTextInput';
-import { useState } from 'react';
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const { user } = useUser()
+
     const handleSubmit = () => {
+        console.log("current user", user);
         console.log("login form submitted", email, password);
     }
 
