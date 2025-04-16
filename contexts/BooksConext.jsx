@@ -1,7 +1,7 @@
-import { createContext, useState } from "react";
-import { ID, Permission, Role } from "react-native-appwrite";
+import { createContext, useEffect, useState } from "react";
+import { ID, Permission, Query, Role } from "react-native-appwrite";
 import { useUser } from "../hooks/useUser";
-import { databases } from "../lib/appwrite"
+import { databases } from "../lib/appwrite";
 
 const DATABASE_ID = "67ff691c003838e8ea48";
 const COLLECTION_ID = "67ff69250024b40ac530";
@@ -14,6 +14,14 @@ export function BooksProvider({ children }) {
 
     async function fetchBooks() {
         try {
+            const response = await databases.listDocuments(
+                DATABASE_ID,
+                COLLECTION_ID,
+                [Query.equal("userId", user.$id)]
+            );
+
+            setBooks(response.documents);
+            console.log(response.documents);
         } catch (error) {
             console.error("Error fetching books:", error);
         }
@@ -51,6 +59,14 @@ export function BooksProvider({ children }) {
             console.error("Error deleting book:", error);
         }
     }
+
+    useEffect(() => {
+        if (user) {
+            fetchBooks();
+        } else {
+            setBooks([]);
+        }
+    }, [user]);
 
     return (
         <BooksContext.Provider
